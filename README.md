@@ -1,0 +1,1 @@
+This repository contains solutions to various programming challenges and tasks provided by artificial intelligence (AI) systems. The purpose is to document and share the code developed in response to AI-generated prompts.
