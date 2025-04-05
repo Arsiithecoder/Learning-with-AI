@@ -1,0 +1,16 @@
+//This code takes a string input and gives the output as a reversed string
+
+import java.util.Scanner;
+
+public class Project {
+    public static void main(String []main){
+        Scanner scanner = new Scanner (System.in);
+
+        System.out.println("Enter a string to reverse:");
+        String input = scanner.nextLine();
+        scanner.close();
+
+        String reversed = new StringBuilder(input).reverse().toString();
+        System.out.println("Reversed string: " + reversed);
+    }
+}
