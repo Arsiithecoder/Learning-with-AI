@@ -1,0 +1,68 @@
+//calculator
+
+import java.util.Scanner;
+
+public class Project {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Command Line Calculator");
+        System.out.println("Enter an expression in the format: number operator number");
+        System.out.println("Supported operators: + (addition), - (subtraction), * (multiplication), / (division)");
+        System.out.println("Example: 10 + 5");
+        
+        while (true) {
+            try {
+                System.out.print("\nEnter expression (or 'exit' to quit): ");
+                String input = scanner.nextLine().trim();
+                
+                if (input.equalsIgnoreCase("exit")) {
+                    System.out.println("Exiting program.");
+                    break;
+                }
+                
+                String[] parts = input.split("\\s+");
+                if (parts.length != 3) {
+                    System.out.println("Error: please enter an expression in the format: number operator number");
+                    continue;
+                }
+                
+                double num1 = Double.parseDouble(parts[0]);
+                String operator = parts[1];
+                double num2 = Double.parseDouble(parts[2]);
+                
+                double result;
+                switch (operator) {
+                    case "+":
+                        result = num1 + num2;
+                        break;
+                    case "-":
+                        result = num1 - num2;
+                        break;
+                    case "*":
+                        result = num1 * num2;
+                        break;
+                    case "/":
+                        if (num2 == 0) {
+                            System.out.println("Error: division by zero is not allowed");
+                            continue;
+                        }
+                        result = num1 / num2;
+                        break;
+                    default:
+                        System.out.println("Error: unsupported operator. Use +, -, *, /");
+                        continue;
+                }
+                
+                System.out.println("Result: " + result);
+                
+            } catch (NumberFormatException e) {
+                System.out.println("Error: please enter valid numbers");
+            } catch (Exception e) {
+                System.out.println("An error occurred: " + e.getMessage());
+            }
+        }
+        
+        scanner.close();
+    }
+}
