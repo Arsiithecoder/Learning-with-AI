@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class FibonacciGenerator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        int n;
+        do {
+            System.out.print("Enter the number of Fibonacci numbers to generate: ");
+            
+            while (!scanner.hasNextInt()) {
+                System.out.println("Please enter a valid positive integer.");
+                System.out.print("Enter the number of Fibonacci numbers to generate: ");
+                scanner.next();
+            }
+            
+            n = scanner.nextInt();
+            
+            if (n <= 0) {
+                System.out.println("Please enter a positive integer greater than 0.");
+            }
+        } while (n <= 0);
+        
+        System.out.print("Fibonacci sequence: ");
+        
+        if (n >= 1) {
+            System.out.print("0");
+        }
+        
+        if (n >= 2) {
+            System.out.print(", 1");
+        }
+        
+        long a = 0, b = 1;
+        for (int i = 3; i <= n; i++) {
+            long next = a + b;
+            System.out.print(", " + next);
+            a = b;
+            b = next;
+        }
+        
+        scanner.close();
+    }
+}
