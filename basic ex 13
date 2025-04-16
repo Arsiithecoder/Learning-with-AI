@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class Project {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+
+        scanner.close();
+
+        String processedInput = input.toLowerCase().replaceAll("[^a-z]", "");
+
+        int[] frequency = new int[26];
+
+        for (char c : processedInput.toCharArray()) {
+            frequency[c - 'a']++;
+        }
+
+        int maxFrequency = 0;
+        char mostFrequentChar = 'a';
+
+        for (int i = 0; i < 26; i++) {
+            if (frequency[i] > maxFrequency) {
+                maxFrequency = frequency[i];
+                mostFrequentChar = (char) (i + 'a');
+            }
+        }
+
+        if (maxFrequency > 0) {
+            System.out.println("The most frequent character is '" + mostFrequentChar +
+                               "' appearing " + maxFrequency + " times.");
+        } else {
+            System.out.println("No letters found in the input.");
+        }
+    }
+}
