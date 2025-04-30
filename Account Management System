@@ -1,0 +1,110 @@
+abstract class BankAccount {
+    protected String accountNumber;
+    protected String accountHolder;
+    protected double balance;
+
+    public BankAccount(String accountNumber, String accountHolder, double balance) {
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: $" + amount);
+        } else {
+            System.out.println("Invalid deposit amount.");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdrawn: $" + amount);
+        } else {
+            System.out.println("Insufficient funds or invalid amount.");
+        }
+    }
+
+    public abstract double calculateInterest();
+
+    public abstract void displayAccountDetails();
+}
+
+class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount(String accountNumber, String accountHolder, double balance, double interestRate) {
+        super(accountNumber, accountHolder, balance);
+        this.interestRate = interestRate;
+    }
+
+    public double calculateInterest() {
+        return balance * interestRate;
+    }
+
+    public void displayAccountDetails() {
+        System.out.println("Savings Account Number: " + accountNumber);
+        System.out.println("Account Holder: " + accountHolder);
+        System.out.println("Balance: $" + balance);
+        System.out.println("Interest Rate: " + (interestRate * 100) + "%");
+    }
+}
+
+class CheckingAccount extends BankAccount {
+    private double overdraftLimit;
+
+    public CheckingAccount(String accountNumber, String accountHolder, double balance, double overdraftLimit) {
+        super(accountNumber, accountHolder, balance);
+        this.overdraftLimit = overdraftLimit;
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && (balance + overdraftLimit) >= amount) {
+            balance -= amount;
+            System.out.println("Withdrawn: $" + amount);
+        } else {
+            System.out.println("Overdraft limit exceeded or invalid amount.");
+        }
+    }
+
+    public double calculateInterest() {
+        return 0; // No interest for checking accounts
+    }
+
+    public void displayAccountDetails() {
+        System.out.println("Checking Account Number: " + accountNumber);
+        System.out.println("Account Holder: " + accountHolder);
+        System.out.println("Balance: $" + balance);
+        System.out.println("Overdraft Limit: $" + overdraftLimit);
+    }
+}
+
+public class BankSystem {
+    public static void main(String[] args) {
+        BankAccount savings = new SavingsAccount("SA123", "Alice", 1000.0, 0.05);
+        BankAccount checking = new CheckingAccount("CA456", "Bob", 500.0, 200.0);
+
+        savings.displayAccountDetails();
+        System.out.println("Interest: $" + savings.calculateInterest());
+        System.out.println();
+
+        checking.displayAccountDetails();
+        System.out.println("Interest: $" + checking.calculateInterest());
+        System.out.println();
+
+        savings.deposit(200);
+        savings.withdraw(150);
+        System.out.println();
+
+        checking.deposit(300);
+        checking.withdraw(800); // Should allow overdraft
+        System.out.println();
+
+        savings.displayAccountDetails();
+        System.out.println();
+
+        checking.displayAccountDetails();
+    }
+}
