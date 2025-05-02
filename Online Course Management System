@@ -1,0 +1,83 @@
+class Course {
+    protected String courseName;
+    protected String instructor;
+    protected int credits;
+
+    public Course(String courseName, String instructor, int credits) {
+        this.courseName = courseName;
+        this.instructor = instructor;
+        this.credits = credits;
+    }
+
+    public void displayCourseDetails() {
+        System.out.println("Course Name: " + courseName);
+        System.out.println("Instructor: " + instructor);
+        System.out.println("Credits: " + credits);
+    }
+
+    public boolean isEligibleForCertificate() {
+        // Default implementation
+        return credits >= 3;
+    }
+}
+
+class OnlineCourse extends Course {
+    private String platform;
+    private int duration; // in weeks
+
+    public OnlineCourse(String courseName, String instructor, int credits, String platform, int duration) {
+        super(courseName, instructor, credits);
+        this.platform = platform;
+        this.duration = duration;
+    }
+
+    @Override
+    public void displayCourseDetails() {
+        super.displayCourseDetails();
+        System.out.println("Platform: " + platform);
+        System.out.println("Duration: " + duration + " weeks");
+    }
+
+    @Override
+    public boolean isEligibleForCertificate() {
+        return duration >= 4;
+    }
+}
+
+class OnsiteCourse extends Course {
+    private String location;
+    private String schedule;
+
+    public OnsiteCourse(String courseName, String instructor, int credits, String location, String schedule) {
+        super(courseName, instructor, credits);
+        this.location = location;
+        this.schedule = schedule;
+    }
+
+    @Override
+    public void displayCourseDetails() {
+        super.displayCourseDetails();
+        System.out.println("Location: " + location);
+        System.out.println("Schedule: " + schedule);
+    }
+
+    @Override
+    public boolean isEligibleForCertificate() {
+        return credits >= 3;
+    }
+}
+
+public class CourseTest {
+    public static void main(String[] args) {
+        Course onlineCourse = new OnlineCourse("Java Programming", "Alice Smith", 4, "Coursera", 6);
+        Course onsiteCourse = new OnsiteCourse("Data Structures", "Bob Johnson", 3, "Room 101", "Mon-Wed-Fri 10:00-11:30");
+
+        System.out.println("Online Course Details:");
+        onlineCourse.displayCourseDetails();
+        System.out.println("Eligible for Certificate: " + onlineCourse.isEligibleForCertificate());
+
+        System.out.println("\nOnsite Course Details:");
+        onsiteCourse.displayCourseDetails();
+        System.out.println("Eligible for Certificate: " + onsiteCourse.isEligibleForCertificate());
+    }
+}
