@@ -1,0 +1,49 @@
+class Vehicle {
+    protected int speed;
+
+    public Vehicle() {
+        this.speed = 0;
+    }
+
+    public void speedUp() {
+        speed += 1;
+    }
+
+    public void displaySpeed() {
+        System.out.println("Current speed: " + speed + " km/h");
+    }
+}
+
+class Car extends Vehicle {
+    @Override
+    public void speedUp() {
+        speed += 10;
+    }
+}
+
+class Bicycle extends Vehicle {
+    @Override
+    public void speedUp() {
+        speed += 5;
+    }
+}
+
+public class VehicleTest {
+    public static void main(String[] args) {
+        Vehicle genericVehicle = new Vehicle();
+        Car car = new Car();
+        Bicycle bicycle = new Bicycle();
+
+        System.out.println("Generic Vehicle:");
+        genericVehicle.speedUp();
+        genericVehicle.displaySpeed();
+
+        System.out.println("\nCar:");
+        car.speedUp();
+        car.displaySpeed();
+
+        System.out.println("\nBicycle:");
+        bicycle.speedUp();
+        bicycle.displaySpeed();
+    }
+}
