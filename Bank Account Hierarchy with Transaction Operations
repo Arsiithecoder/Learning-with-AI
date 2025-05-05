@@ -1,0 +1,99 @@
+class BankAccount {
+    protected String accountNumber;
+    protected double balance;
+
+    public BankAccount(String accountNumber, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.balance = initialBalance;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposited $" + amount);
+    }
+
+    public void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdrew $" + amount);
+        } else {
+            System.out.println("Insufficient funds.");
+        }
+    }
+
+    public void displayBalance() {
+        System.out.println("Account " + accountNumber + " balance: $" + balance);
+    }
+}
+
+class SavingsAccount extends BankAccount {
+    private double interestRate;
+    private int withdrawalsThisMonth;
+    private static final int WITHDRAWAL_LIMIT = 3;
+
+    public SavingsAccount(String accountNumber, double initialBalance, double interestRate) {
+        super(accountNumber, initialBalance);
+        this.interestRate = interestRate;
+        this.withdrawalsThisMonth = 0;
+    }
+
+    public void applyInterest() {
+        double interest = balance * interestRate;
+        balance += interest;
+        System.out.println("Applied interest: $" + interest);
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (withdrawalsThisMonth >= WITHDRAWAL_LIMIT) {
+            System.out.println("Withdrawal limit reached for this month.");
+        } else if (balance >= amount) {
+            balance -= amount;
+            withdrawalsThisMonth++;
+            System.out.println("Withdrew $" + amount);
+        } else {
+            System.out.println("Insufficient funds.");
+        }
+    }
+}
+
+class CheckingAccount extends BankAccount {
+    private double overdraftLimit;
+
+    public CheckingAccount(String accountNumber, double initialBalance, double overdraftLimit) {
+        super(accountNumber, initialBalance);
+        this.overdraftLimit = overdraftLimit;
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (balance + overdraftLimit >= amount) {
+            balance -= amount;
+            System.out.println("Withdrew $" + amount);
+        } else {
+            System.out.println("Exceeded overdraft limit.");
+        }
+    }
+}
+
+public class BankAccountTest {
+    public static void main(String[] args) {
+        SavingsAccount savings = new SavingsAccount("SA123", 1000.0, 0.05);
+        CheckingAccount checking = new CheckingAccount("CA456", 500.0, 200.0);
+
+        System.out.println("Savings Account Operations:");
+        savings.deposit(200.0);
+        savings.withdraw(100.0);
+        savings.withdraw(100.0);
+        savings.withdraw(100.0);
+        savings.withdraw(100.0); // Should hit withdrawal limit
+        savings.applyInterest();
+        savings.displayBalance();
+
+        System.out.println("\nChecking Account Operations:");
+        checking.deposit(300.0);
+        checking.withdraw(1000.0); // Should be within overdraft limit
+        checking.withdraw(100.0);  // Should exceed overdraft limit
+        checking.displayBalance();
+    }
+}
