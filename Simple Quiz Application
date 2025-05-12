@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class QuizApp {
+    public static void main(String[] args) {
+        // Questions
+        String[] questions = {
+            "What is the capital of France?",
+            "Which planet is known as the Red Planet?",
+            "What is the largest ocean on Earth?",
+            "Who wrote 'Romeo and Juliet'?",
+            "What is the chemical symbol for water?"
+        };
+
+        // Options for each question
+        String[][] options = {
+            {"A. Berlin", "B. London", "C. Paris", "D. Madrid"},
+            {"A. Earth", "B. Mars", "C. Jupiter", "D. Venus"},
+            {"A. Atlantic Ocean", "B. Indian Ocean", "C. Arctic Ocean", "D. Pacific Ocean"},
+            {"A. William Wordsworth", "B. William Shakespeare", "C. John Keats", "D. Charles Dickens"},
+            {"A. H2O", "B. CO2", "C. O2", "D. NaCl"}
+        };
+
+        // Correct answers
+        char[] answers = {'C', 'B', 'D', 'B', 'A'};
+
+        // Scanner for user input
+        Scanner scanner = new Scanner(System.in);
+        int score = 0;
+
+        // Iterate through questions
+        for (int i = 0; i < questions.length; i++) {
+            System.out.println("\nQuestion " + (i + 1) + ": " + questions[i]);
+            for (String option : options[i]) {
+                System.out.println(option);
+            }
+
+            System.out.print("Your answer (A/B/C/D): ");
+            char userAnswer = scanner.next().toUpperCase().charAt(0);
+
+            if (userAnswer == answers[i]) {
+                System.out.println("Correct!");
+                score++;
+            } else {
+                System.out.println("Incorrect! The correct answer is " + answers[i] + ".");
+            }
+        }
+
+        // Display final score
+        System.out.println("\nQuiz Completed!");
+        System.out.println("Your score: " + score + " out of " + questions.length);
+
+        scanner.close();
+    }
+}
