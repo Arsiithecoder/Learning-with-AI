@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class SimpleCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String continueCalculation;
+
+        System.out.println("Welcome to the Simple Calculator!");
+
+        do {
+            System.out.print("\nEnter the first number: ");
+            while (!scanner.hasNextDouble()) {
+                System.out.print("Invalid input. Please enter a valid number: ");
+                scanner.next();
+            }
+            double num1 = scanner.nextDouble();
+
+            System.out.print("Enter the second number: ");
+            while (!scanner.hasNextDouble()) {
+                System.out.print("Invalid input. Please enter a valid number: ");
+                scanner.next();
+            }
+            double num2 = scanner.nextDouble();
+
+            System.out.print("Enter an operator (+, -, *, /): ");
+            char operator = scanner.next().charAt(0);
+
+            double result;
+
+            switch (operator) {
+                case '+':
+                    result = num1 + num2;
+                    System.out.println("Result: " + result);
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    System.out.println("Result: " + result);
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    System.out.println("Result: " + result);
+                    break;
+                case '/':
+                    if (num2 != 0) {
+                        result = num1 / num2;
+                        System.out.println("Result: " + result);
+                    } else {
+                        System.out.println("Error: Division by zero is undefined.");
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid operator. Please use +, -, *, or /.");
+            }
+
+            System.out.print("\nDo you want to perform another calculation? (yes/no): ");
+            continueCalculation = scanner.next().toLowerCase();
+
+        } while (continueCalculation.equals("yes"));
+
+        System.out.println("Thank you for using the Simple Calculator!");
+        scanner.close();
+    }
+}
