@@ -1,0 +1,76 @@
+import java.util.*;
+
+public class AdventureGame {
+    static Scanner scanner = new Scanner(System.in);
+    static Map<String, Room> rooms = new HashMap<>();
+    static Player player;
+
+    public static void main(String[] args) {
+        setupGame();
+        System.out.println("Welcome to the Adventure Game!");
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        player = new Player(name, rooms.get("Entrance"));
+        gameLoop();
+    }
+
+    static void setupGame() {
+        Room entrance = new Room("Entrance", "You are at the entrance of a mysterious cave.");
+        Room hall = new Room("Hall", "A dimly lit hall with ancient paintings.");
+        Room chamber = new Room("Chamber", "A chamber with a treasure chest.");
+        Room trapRoom = new Room("Trap Room", "A room that seems suspiciously empty.");
+
+        entrance.setExits(Map.of("north", hall));
+        hall.setExits(Map.of("south", entrance, "east", chamber, "west", trapRoom));
+        chamber.setExits(Map.of("west", hall));
+        trapRoom.setExits(Map.of("east", hall));
+
+        rooms.put("Entrance", entrance);
+        rooms.put("Hall", hall);
+        rooms.put("Chamber", chamber);
+        rooms.put("Trap Room", trapRoom);
+    }
+
+    static void gameLoop() {
+        while (true) {
+            System.out.println("\n" + player.currentRoom.description);
+            System.out.print("Available exits: ");
+            player.currentRoom.exits.keySet().forEach(exit -> System.out.print(exit + " "));
+            System.out.println("\nWhat do you want to do?");
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("quit")) {
+                System.out.println("Thanks for playing!");
+                break;
+            } else if (player.currentRoom.exits.containsKey(input)) {
+                player.currentRoom = player.currentRoom.exits.get(input);
+            } else {
+                System.out.println("Invalid command.");
+            }
+        }
+    }
+}
+
+class Player {
+    String name;
+    Room currentRoom;
+
+    Player(String name, Room startingRoom) {
+        this.name = name;
+        this.currentRoom = startingRoom;
+    }
+}
+
+class Room {
+    String name;
+    String description;
+    Map<String, Room> exits = new HashMap<>();
+
+    Room(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    void setExits(Map<String, Room> exits) {
+        this.exits = exits;
+    }
+}
