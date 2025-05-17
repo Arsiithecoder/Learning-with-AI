@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class EscapeRoomGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean hasKey = false;
+        boolean doorUnlocked = false;
+
+        System.out.println("Welcome to the Escape Room!");
+        System.out.println("You find yourself locked in a mysterious room.");
+        System.out.println("Explore the room and find a way to escape.");
+
+        while (true) {
+            System.out.println("\nWhat would you like to do?");
+            System.out.println("Options: look around, inspect desk, inspect bookshelf, inspect door");
+            System.out.print("Enter your choice: ");
+            String choice = scanner.nextLine().toLowerCase();
+
+            switch (choice) {
+                case "look around":
+                    System.out.println("You see a desk, a bookshelf, and a locked door.");
+                    break;
+                case "inspect desk":
+                    if (!hasKey) {
+                        System.out.println("You open the desk drawer and find a small key.");
+                        hasKey = true;
+                    } else {
+                        System.out.println("The desk drawer is empty.");
+                    }
+                    break;
+                case "inspect bookshelf":
+                    System.out.println("You browse through the books but find nothing of interest.");
+                    break;
+                case "inspect door":
+                    if (!hasKey) {
+                        System.out.println("The door is locked. You need a key to open it.");
+                    } else if (!doorUnlocked) {
+                        System.out.println("You use the key to unlock the door.");
+                        doorUnlocked = true;
+                    } else {
+                        System.out.println("The door is unlocked. You open it and escape the room!");
+                        System.out.println("Congratulations! You've escaped the room.");
+                        scanner.close();
+                        return;
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
