@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class MysteryAdventureGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String choice;
+
+        System.out.println("Welcome to the Mystery Adventure!");
+        System.out.println("You find yourself in a dimly lit room with two doors.");
+        System.out.println("Do you choose the 'left' door or the 'right' door?");
+        System.out.print("Enter your choice: ");
+        choice = scanner.nextLine().toLowerCase();
+
+        if (choice.equals("left")) {
+            System.out.println("You enter a library filled with ancient books.");
+            System.out.println("A mysterious figure offers you a book. Do you 'accept' or 'decline'?");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextLine().toLowerCase();
+
+            if (choice.equals("accept")) {
+                System.out.println("The book reveals secrets that help you escape the mansion. You win!");
+            } else {
+                System.out.println("The figure vanishes, and you're left alone. The mystery remains unsolved.");
+            }
+        } else if (choice.equals("right")) {
+            System.out.println("You enter a room with a sleeping dragon.");
+            System.out.println("Do you try to 'sneak' past it or 'attack' it?");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextLine().toLowerCase();
+
+            if (choice.equals("sneak")) {
+                System.out.println("You successfully sneak past the dragon and find the exit. You win!");
+            } else {
+                System.out.println("The dragon awakens and you're forced to flee. The adventure ends here.");
+            }
+        } else {
+            System.out.println("Invalid choice. The adventure cannot continue.");
+        }
+
+        scanner.close();
+    }
+}
