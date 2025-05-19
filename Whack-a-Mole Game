@@ -1,0 +1,75 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class WhackAMoleGame extends JFrame {
+    private JButton[] buttons = new JButton[9];
+    private int score = 0;
+    private JLabel scoreLabel = new JLabel("Score: 0");
+    private Timer moleTimer;
+    private Random random = new Random();
+    private int moleIndex = -1;
+
+    public WhackAMoleGame() {
+        setTitle("Whack-a-Mole");
+        setSize(400, 450);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        JPanel gridPanel = new JPanel(new GridLayout(3, 3));
+        for (int i = 0; i < buttons.length; i++) {
+            JButton button = new JButton();
+            button.setBackground(Color.LIGHT_GRAY);
+            button.addActionListener(new MoleClickListener(i));
+            buttons[i] = button;
+            gridPanel.add(button);
+        }
+
+        add(scoreLabel, BorderLayout.NORTH);
+        add(gridPanel, BorderLayout.CENTER);
+
+        startGame();
+        setVisible(true);
+    }
+
+    private void startGame() {
+        moleTimer = new Timer(1000, e -> {
+            if (moleIndex != -1) {
+                buttons[moleIndex].setBackground(Color.LIGHT_GRAY);
+            }
+            moleIndex = random.nextInt(buttons.length);
+            buttons[moleIndex].setBackground(Color.GREEN);
+        });
+        moleTimer.start();
+
+        // Game duration: 30 seconds
+        new Timer(30000, e -> {
+            moleTimer.stop();
+            JOptionPane.showMessageDialog(this, "Time's up! Your score: " + score);
+            System.exit(0);
+        }).start();
+    }
+
+    private class MoleClickListener implements ActionListener {
+        private int index;
+
+        public MoleClickListener(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (index == moleIndex) {
+                score++;
+                scoreLabel.setText("Score: " + score);
+                buttons[moleIndex].setBackground(Color.LIGHT_GRAY);
+                moleIndex = -1;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(WhackAMoleGame::new);
+    }
+}
