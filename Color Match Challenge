@@ -1,0 +1,84 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class ColorMatchGame extends JFrame {
+    private JButton[] buttons = new JButton[9];
+    private JLabel scoreLabel = new JLabel("Score: 0");
+    private int score = 0;
+    private Timer gameTimer;
+    private Random random = new Random();
+    private Color[] colors = {Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN};
+    private int correctButtonIndex = -1;
+
+    public ColorMatchGame() {
+        setTitle("Color Match Challenge");
+        setSize(400, 450);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        JPanel gridPanel = new JPanel(new GridLayout(3, 3));
+        for (int i = 0; i < 9; i++) {
+            buttons[i] = new JButton();
+            buttons[i].setBackground(Color.LIGHT_GRAY);
+            buttons[i].addActionListener(new ColorClickListener(i));
+            gridPanel.add(buttons[i]);
+        }
+
+        add(scoreLabel, BorderLayout.NORTH);
+        add(gridPanel, BorderLayout.CENTER);
+        setVisible(true);
+
+        startGame();
+    }
+
+    private void startGame() {
+        gameTimer = new Timer(1000, e -> {
+            resetColors();
+            correctButtonIndex = random.nextInt(9);
+            buttons[correctButtonIndex].setBackground(Color.RED);
+            for (int i = 0; i < 9; i++) {
+                if (i != correctButtonIndex) {
+                    buttons[i].setBackground(colors[random.nextInt(colors.length)]);
+                }
+            }
+        });
+        gameTimer.start();
+
+        // Game lasts for 30 seconds
+        new Timer(30000, e -> {
+            gameTimer.stop();
+            JOptionPane.showMessageDialog(this, "Game Over! Your score is: " + score);
+            System.exit(0);
+        }).start();
+    }
+
+    private void resetColors() {
+        for (JButton button : buttons) {
+            button.setBackground(Color.LIGHT_GRAY);
+        }
+    }
+
+    private class ColorClickListener implements ActionListener {
+        private int index;
+
+        public ColorClickListener(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (index == correctButtonIndex) {
+                score++;
+            } else {
+                score--;
+            }
+            scoreLabel.setText("Score: " + score);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(ColorMatchGame::new);
+    }
+}
