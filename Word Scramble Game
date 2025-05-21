@@ -1,0 +1,39 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class WordScrambleGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] words = {"apple", "banana", "computer", "java", "python", "school", "planet"};
+        Random rand = new Random();
+
+        String originalWord = words[rand.nextInt(words.length)];
+        String scrambledWord = scrambleWord(originalWord, rand);
+
+        System.out.println("Welcome to Word Scramble!");
+        System.out.println("Guess the word: " + scrambledWord);
+
+        int attempts = 3;
+        while (attempts > 0) {
+            System.out.print("Your guess: ");
+            String guess = scanner.nextLine();
+
+            if (guess.equalsIgnoreCase(originalWord)) {
+                System.out.println("Correct! Well done.");
+                break;
+            } else {
+                attempts--;
+                System.out.println("Wrong. Attempts left: " + attempts);
+            }
+        }
+
+        if (attempts == 0) {
+            System.out.println("Out of tries! The correct word was: " + originalWord);
+        }
+
+        scanner.close();
+    }
+
+    public static String scrambleWord(String word, Random rand) {
+        char[] letters = word.toCharArray();
+        for (int i = 0; i < letters.length; i++) {
