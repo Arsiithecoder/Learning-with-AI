@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class HangmanLite {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] wordList = {"apple", "cloud", "stone", "train", "magic"};
+        String word = wordList[(int)(Math.random() * wordList.length)];
+        char[] guessedWord = new char[word.length()];
+        boolean[] guessedLetters = new boolean[26]; // track guessed letters
+        int attempts = 6;
+
+        // Initialize display with underscores
+        for (int i = 0; i < word.length(); i++) {
+            guessedWord[i] = '_';
+        }
+
+        System.out.println("Welcome to Hangman Lite!");
+        while (attempts > 0 && new String(guessedWord).contains("_")) {
+            System.out.print("Word: ");
+            for (char c : guessedWord) {
+                System.out.print(c + " ");
+            }
+
+            System.out.print("\nGuess a letter: ");
+            char guess = scanner.nextLine().toLowerCase().charAt(0);
+
+            if (!Character.isLetter(guess)) {
+                System.out.println("Please enter a valid letter.");
+                continue;
+            }
+
+            if (guessedLetters[guess - 'a']) {
+                System.out.println("You already guessed that letter.");
+                continue;
+            }
+
+            guessedLetters[guess - 'a'] = true;
+            boolean found = false;
+
+            for (int i = 0; i < word.length(); i++) {
+                if (word.charAt(i) == guess) {
+                    guessedWord[i] = guess;
+                    found = true;
+                }
+            }
+
+            if (found) {
+                System.out.println("Correct!");
+            } else {
+                attempts--;
+                System.out.println("Wrong! Attempts left: " + attempts);
+            }
+        }
+
+        if (!new String(guessedWord).contains("_")) {
+            System.out.println("Congratulations! You guessed the word: " + word);
+        } else {
+            System.out.println("Game over. The word was: " + word);
+        }
+
+        scanner.close();
+    }
+}
