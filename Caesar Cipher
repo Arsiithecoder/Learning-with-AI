@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class CaesarCipher {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a message: ");
+        String message = scanner.nextLine();
+
+        System.out.println("Enter a shift key (number): ");
+        int key = scanner.nextInt();
+
+        scanner.nextLine();  // consume leftover newline
+
+        System.out.println("Do you want to encode or decode? (e/d): ");
+        String choice = scanner.nextLine().toLowerCase();
+
+        if (choice.equals("d")) {
+            key = -key;
+        }
+
+        String result = "";
+
+        for (char ch : message.toCharArray()) {
+            if (Character.isLetter(ch)) {
+                char base = Character.isUpperCase(ch) ? 'A' : 'a';
+                char shifted = (char) ((ch - base + key + 26) % 26 + base);
+                result += shifted;
+            } else {
+                result += ch; // keep spaces and punctuation unchanged
+            }
+        }
+
+        System.out.println("Result: " + result);
+
+        scanner.close();
+    }
+}
