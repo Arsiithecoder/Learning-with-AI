@@ -1,0 +1,23 @@
+import java.util.Scanner;
+
+public class WordReverser {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a sentence:");
+        String input = scanner.nextLine();
+
+        String[] words = input.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        for (String word : words) {
+            StringBuilder reversed = new StringBuilder(word);
+            result.append(reversed.reverse().toString()).append(" ");
+        }
+
+        System.out.println("Reversed words:");
+        System.out.println(result.toString().trim());
+
+        scanner.close();
+    }
+}
