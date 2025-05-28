@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class NumberToWords {
+    static final String[] ones = {
+        "zero", "one", "two", "three", "four",
+        "five", "six", "seven", "eight", "nine",
+        "ten", "eleven", "twelve", "thirteen", "fourteen",
+        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+    };
+
+    static final String[] tens = {
+        "", "", "twenty", "thirty", "forty", "fifty",
+        "sixty", "seventy", "eighty", "ninety"
+    };
+
+    public static String convert(int number) {
+        if (number < 20) {
+            return ones[number];
+        } else if (number < 100) {
+            return tens[number / 10] + (number % 10 != 0 ? " " + ones[number % 10] : "");
+        } else if (number <= 999) {
+            return ones[number / 100] + " hundred" +
+                    (number % 100 != 0 ? " " + convert(number % 100) : "");
+        }
+        return "Out of range";
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number (0–999): ");
+        int number = scanner.nextInt();
+
+        if (number < 0 || number > 999) {
+            System.out.println("Number is out of range.");
+        } else {
+            System.out.println("In words: " + convert(number));
+        }
+
+        scanner.close();
+    }
+}
