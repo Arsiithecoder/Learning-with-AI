@@ -1,0 +1,9 @@
+Guess the number between 1 and 100:
+Enter your guess (Attempt 1/7): 50
+Too high!
+
+Enter your guess (Attempt 2/7): 25
+Too low!
+
+Enter your guess (Attempt 3/7): 37
+Correct! You guessed it in 3 tries.
