@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class EmojiReplacer {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter your message: ");
+        String message = scanner.nextLine();
+
+        // Replace words with emojis
+        message = message.replaceAll("(?i)happy", "😊");
+        message = message.replaceAll("(?i)sad", "😢");
+        message = message.replaceAll("(?i)love", "❤️");
+
+        System.out.println("Emoji message: " + message);
+
+        scanner.close();
+    }
+}
