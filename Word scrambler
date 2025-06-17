@@ -1,0 +1,18 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class WordScrambler {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random rand = new Random();
+
+        System.out.print("Enter a word: ");
+        String input = scanner.nextLine();
+        scanner.close();
+
+        // Convert string to char array
+        char[] characters = input.toCharArray();
+
+        // Scramble the characters (Fisher-Yates shuffle)
+        for (int i = characters.length - 1; i > 0; i--) {
+            int
