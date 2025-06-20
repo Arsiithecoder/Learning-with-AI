@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class MoodDetector {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Tell me how you feel:");
+        String input = scanner.nextLine().toLowerCase();
+
+        String emoji;
+
+        if (input.contains("happy") || input.contains("glad") || input.contains("great")) {
+            emoji = "😄";
+        } else if (input.contains("sad") || input.contains("unhappy") || input.contains("down")) {
+            emoji = "😢";
+        } else if (input.contains("angry") || input.contains("mad") || input.contains("furious")) {
+            emoji = "😠";
+        } else if (input.contains("tired") || input.contains("sleepy")) {
+            emoji = "😴";
+        } else {
+            emoji = "🤔";
+        }
+
+        System.out.println("Your mood: " + emoji);
+
+        scanner.close();
+    }
+}
