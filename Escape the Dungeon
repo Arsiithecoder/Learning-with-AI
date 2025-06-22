@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class DungeonEscape {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("🏰 Welcome to Dungeon Escape!");
+        System.out.println("You wake up in a dark dungeon with two doors: left or right.");
+
+        System.out.print("Do you choose left or right? ");
+        String choice1 = scanner.nextLine().trim().toLowerCase();
+
+        if (choice1.equals("left")) {
+            System.out.println("You enter a room with a sleeping dragon! 🐉");
+            System.out.print("Do you sneak or attack? ");
+            String choice2 = scanner.nextLine().trim().toLowerCase();
+
+            if (choice2.equals("sneak")) {
+                System.out.println("You sneak past the dragon and find a ladder leading up.");
+                System.out.print("Do you climb or search the room? ");
+                String choice3 = scanner.nextLine().trim().toLowerCase();
+
+                if (choice3.equals("climb")) {
+                    System.out.println("🎉 You climb out and escape the dungeon. You're free!");
+                } else {
+                    System.out.println("Oh no! The dragon woke up and roasted you! 🔥 Game over.");
+                }
+
+            } else {
+                System.out.println("You attack the dragon and... get eaten! 🐲 Game over.");
+            }
+
+        } else if (choice1.equals("right")) {
+            System.out.println("You fall into a trap pit! 😱 Game over.");
+        } else {
+            System.out.println("You stood too long and got caught by the guards. 🚨 Game over.");
+        }
+
+        scanner.close();
+    }
+}
