@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class AdventureStory {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome, traveler! You find yourself at a fork in the road.");
+        System.out.println("Do you choose the left path through the dark forest (1) or the right path along the sunny hills (2)?");
+        System.out.print("Enter 1 or 2: ");
+        int choice1 = scanner.nextInt();
+
+        if (choice1 == 1) {
+            System.out.println("\nYou enter the dark forest. Owls hoot in the distance.");
+            System.out.println("Suddenly, a shadowy figure steps out. Do you talk (1) or run (2)?");
+            int choice2 = scanner.nextInt();
+
+            if (choice2 == 1) {
+                System.out.println("\nThe figure is a wise forest guardian. He gives you a magic stone. You continue your journey with a smile.");
+            } else {
+                System.out.println("\nYou run blindly and fall into a pit! You wake up later, bruised but alive.");
+            }
+
+        } else {
+            System.out.println("\nYou walk peacefully through the sunny hills.");
+            System.out.println("You find a small hut. Do you enter (1) or walk past (2)?");
+            int choice2 = scanner.nextInt();
+
+            if (choice2 == 1) {
+                System.out.println("\nInside, an old woman offers you soup and rest. You gain strength for the road ahead.");
+            } else {
+                System.out.println("\nYou walk on, but soon it starts to rain heavily. You find shelter under a tree.");
+            }
+        }
+
+        System.out.println("\nYour journey continues...");
+        scanner.close();
+    }
+}
