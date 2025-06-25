@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class AdventureMap {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Map dimensions (3x3 grid)
+        final int MAP_SIZE = 3;
+        int x = 1, y = 1; // Player starts at center (1,1)
+
+        String[][] locations = {
+            {"Dark Forest", "River Bank", "Old Tower"},
+            {"Cave Entrance", "Village Center", "Market"},
+            {"Mountain", "Meadow", "Abandoned Hut"}
+        };
+
+        System.out.println("🌍 Welcome to the World of Mystara!");
+        System.out.println("You're starting at the Village Center (1,1).");
+        System.out.println("Type N (North), S (South), E (East), or W (West) to move. Type 'exit' to quit.");
+
+        while (true) {
+            System.out.print("\nEnter your move: ");
+            String input = scanner.nextLine().toUpperCase();
+
+            if (input.equals("EXIT")) {
+                System.out.println("Farewell, brave traveler!");
+                break;
+            }
+
+            switch (input) {
+                case "N":
+                    if (y > 0) y--;
+                    else System.out.println("You can't go further north!");
+                    break;
+                case "S":
+                    if (y < MAP_SIZE - 1) y++;
+                    else System.out.println("You can't go further south!");
+                    break;
+                case "E":
+                    if (x < MAP_SIZE - 1) x++;
+                    else System.out.println("You can't go further east!");
+                    break;
+                case "W":
+                    if (x > 0) x--;
+                    else System.out.println("You can't go further west!");
+                    break;
+                default:
+                    System.out.println("Invalid command!");
+                    break;
+            }
+
+            System.out.println("You are now at: " + locations[y][x] + " (" + x + "," + y + ")");
+        }
+
+        scanner.close();
+    }
+}
