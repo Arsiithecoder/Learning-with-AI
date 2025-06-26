@@ -1,0 +1,73 @@
+import java.util.Scanner;
+
+public class AdventureMapWithEvents {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        final int MAP_SIZE = 3;
+        int x = 1, y = 1; // Start position (Village Center)
+
+        String[][] locations = {
+            {"Dark Forest", "River Bank", "Old Tower"},
+            {"Cave Entrance", "Village Center", "Market"},
+            {"Mountain", "Meadow", "Abandoned Hut"}
+        };
+
+        System.out.println("🌍 Welcome to the World of Mystara!");
+        System.out.println("You're starting at the Village Center (1,1).");
+        System.out.println("Type N (North), S (South), E (East), or W (West) to move. Type 'exit' to quit.");
+
+        while (true) {
+            System.out.print("\nEnter your move: ");
+            String input = scanner.nextLine().toUpperCase();
+
+            if (input.equals("EXIT")) {
+                System.out.println("Farewell, brave traveler!");
+                break;
+            }
+
+            switch (input) {
+                case "N":
+                    if (y > 0) y--;
+                    else System.out.println("You can't go further north!");
+                    break;
+                case "S":
+                    if (y < MAP_SIZE - 1) y++;
+                    else System.out.println("You can't go further south!");
+                    break;
+                case "E":
+                    if (x < MAP_SIZE - 1) x++;
+                    else System.out.println("You can't go further east!");
+                    break;
+                case "W":
+                    if (x > 0) x--;
+                    else System.out.println("You can't go further west!");
+                    break;
+                default:
+                    System.out.println("Invalid command!");
+                    break;
+            }
+
+            String currentLocation = locations[y][x];
+            System.out.println("You are now at: " + currentLocation + " (" + x + "," + y + ")");
+
+            // Event system — simple item discovery
+            switch (currentLocation) {
+                case "Dark Forest":
+                    System.out.println("🌲 You find a mysterious glowing stone!");
+                    break;
+                case "Old Tower":
+                    System.out.println("🏰 You discover an ancient scroll with magical runes.");
+                    break;
+                case "Abandoned Hut":
+                    System.out.println("🏚️ You find some old supplies and a map piece.");
+                    break;
+                default:
+                    System.out.println("Nothing unusual here.");
+                    break;
+            }
+        }
+
+        scanner.close();
+    }
+}
