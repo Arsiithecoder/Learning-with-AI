@@ -1,0 +1,100 @@
+import java.util.*;
+
+public class AdventureMapWithInventory {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        final int MAP_SIZE = 3;
+        int x = 1, y = 1; // Start position (Village Center)
+
+        String[][] locations = {
+            {"Dark Forest", "River Bank", "Old Tower"},
+            {"Cave Entrance", "Village Center", "Market"},
+            {"Mountain", "Meadow", "Abandoned Hut"}
+        };
+
+        // Inventory to store found items
+        List<String> inventory = new ArrayList<>();
+
+        // To keep track of visited locations with events (so you don't get the same item twice)
+        Set<String> visitedEventLocations = new HashSet<>();
+
+        System.out.println("🌍 Welcome to the World of Mystara!");
+        System.out.println("You're starting at the Village Center (1,1).");
+        System.out.println("Type N (North), S (South), E (East), or W (West) to move.");
+        System.out.println("Type 'inventory' to view your items. Type 'exit' to quit.");
+
+        while (true) {
+            System.out.print("\nEnter your move: ");
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            if (input.equals("EXIT")) {
+                System.out.println("Farewell, brave traveler!");
+                break;
+            }
+
+            if (input.equals("INVENTORY")) {
+                if (inventory.isEmpty()) {
+                    System.out.println("Your inventory is empty.");
+                } else {
+                    System.out.println("Your inventory contains: " + inventory);
+                }
+                continue;
+            }
+
+            switch (input) {
+                case "N":
+                    if (y > 0) y--;
+                    else System.out.println("You can't go further north!");
+                    break;
+                case "S":
+                    if (y < MAP_SIZE - 1) y++;
+                    else System.out.println("You can't go further south!");
+                    break;
+                case "E":
+                    if (x < MAP_SIZE - 1) x++;
+                    else System.out.println("You can't go further east!");
+                    break;
+                case "W":
+                    if (x > 0) x--;
+                    else System.out.println("You can't go further west!");
+                    break;
+                default:
+                    System.out.println("Invalid command!");
+                    continue;
+            }
+
+            String currentLocation = locations[y][x];
+            System.out.println("You are now at: " + currentLocation + " (" + x + "," + y + ")");
+
+            // Check for special events only if not already collected
+            if (!visitedEventLocations.contains(currentLocation)) {
+                switch (currentLocation) {
+                    case "Dark Forest":
+                        System.out.println("🌲 You find a mysterious glowing stone!");
+                        inventory.add("Glowing Stone");
+                        visitedEventLocations.add(currentLocation);
+                        break;
+                    case "Old Tower":
+                        System.out.println("🏰 You discover an ancient scroll with magical runes!");
+                        inventory.add("Ancient Scroll");
+                        visitedEventLocations.add(currentLocation);
+                        break;
+                    case "Abandoned Hut":
+                        System.out.println("🏚️ You find some old supplies and a map piece!");
+                        inventory.add("Supplies");
+                        inventory.add("Map Piece");
+                        visitedEventLocations.add(currentLocation);
+                        break;
+                    default:
+                        System.out.println("Nothing unusual here.");
+                        break;
+                }
+            } else {
+                System.out.println("Nothing new here—you've already searched this place.");
+            }
+        }
+
+        scanner.close();
+    }
+}
