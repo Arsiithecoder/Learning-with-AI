@@ -1,0 +1,63 @@
+import java.util.*;
+
+public class AdventureGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        // Map of locations
+        Map<String, Boolean> visitedLocations = new HashMap<>();
+        visitedLocations.put("Dark Forest", false);
+        visitedLocations.put("Old Tower", false);
+        visitedLocations.put("River Bank", false);
+
+        // Loot tables
+        Map<String, List<String>> lootTable = new HashMap<>();
+        lootTable.put("Dark Forest", Arrays.asList("Glowing Stone", "Enchanted Leaf", "Old Dagger"));
+        lootTable.put("Old Tower", Arrays.asList("Ancient Scroll", "Rusty Sword", "Magic Ring"));
+        lootTable.put("River Bank", Arrays.asList("Pearl", "Silver Fish", "Smooth Pebble"));
+
+        // Player inventory
+        List<String> inventory = new ArrayList<>();
+
+        System.out.println("Welcome to the Adventure Game!");
+        System.out.println("Explore locations and collect random loot!");
+
+        while (true) {
+            System.out.println("\nAvailable locations:");
+            for (String loc : visitedLocations.keySet()) {
+                System.out.println("- " + loc);
+            }
+            System.out.println("Type 'inventory' to see your items, or 'exit' to quit.");
+            System.out.print("\nWhere do you want to go? ");
+            String choice = scanner.nextLine().trim();
+
+            if (choice.equalsIgnoreCase("exit")) {
+                System.out.println("Goodbye, adventurer!");
+                break;
+            }
+
+            if (choice.equalsIgnoreCase("inventory")) {
+                System.out.println("\nYour inventory: " + inventory);
+                continue;
+            }
+
+            if (visitedLocations.containsKey(choice)) {
+                if (visitedLocations.get(choice)) {
+                    System.out.println("\n You've already visited " + choice + " and collected its loot.");
+                } else {
+                    System.out.println("\nYou venture into the " + choice + "...");
+                    List<String> lootOptions = lootTable.get(choice);
+                    String foundItem = lootOptions.get(random.nextInt(lootOptions.size()));
+                    System.out.println(" You found a " + foundItem + "!");
+                    inventory.add(foundItem);
+                    visitedLocations.put(choice, true);
+                }
+            } else {
+                System.out.println("\n That location doesn't exist. Try again.");
+            }
+        }
+
+        scanner.close();
+    }
+}
