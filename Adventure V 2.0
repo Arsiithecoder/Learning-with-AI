@@ -1,0 +1,124 @@
+import java.util.*;
+
+public class AdventureGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        // Mark visited locations
+        Map<String, Boolean> visitedLocations = new HashMap<>();
+        visitedLocations.put("Dark Forest", false);
+        visitedLocations.put("Old Tower", false);
+        visitedLocations.put("River Bank", false);
+
+        // Define loot tables with rarities
+        Map<String, List<LootItem>> lootTable = new HashMap<>();
+        lootTable.put("Dark Forest", Arrays.asList(
+                new LootItem("Glowing Stone", "Rare"),
+                new LootItem("Enchanted Leaf", "Common"),
+                new LootItem("Old Dagger", "Epic")
+        ));
+        lootTable.put("Old Tower", Arrays.asList(
+                new LootItem("Ancient Scroll", "Rare"),
+                new LootItem("Rusty Sword", "Common"),
+                new LootItem("Magic Ring", "Epic")
+        ));
+        lootTable.put("River Bank", Arrays.asList(
+                new LootItem("Pearl", "Rare"),
+                new LootItem("Silver Fish", "Common"),
+                new LootItem("Smooth Pebble", "Common")
+        ));
+
+        // Player inventory
+        List<LootItem> inventory = new ArrayList<>();
+
+        System.out.println("🌟 Welcome to the Adventure Game!");
+        System.out.println("Explore locations and collect exciting loot!");
+
+        while (true) {
+            System.out.println("\nAvailable locations:");
+            for (String loc : visitedLocations.keySet()) {
+                System.out.println("- " + loc);
+            }
+            System.out.println("Type 'inventory' to see your items, or 'exit' to quit.");
+            System.out.print("\nWhere do you want to go? ");
+            String choice = scanner.nextLine().trim();
+
+            if (choice.equalsIgnoreCase("exit")) {
+                System.out.println("👋 Goodbye, adventurer!");
+                break;
+            }
+
+            if (choice.equalsIgnoreCase("inventory")) {
+                System.out.println("\nYour Inventory:");
+                if (inventory.isEmpty()) {
+                    System.out.println(" - (empty)");
+                } else {
+                    for (LootItem item : inventory) {
+                        System.out.println(" - " + item);
+                    }
+                }
+                continue;
+            }
+
+            if (visitedLocations.containsKey(choice)) {
+                if (visitedLocations.get(choice)) {
+                    System.out.println("\n⚠️ You've already looted " + choice + ".");
+                } else {
+                    System.out.println("\nYou enter the " + choice + "...");
+                    List<LootItem> lootOptions = lootTable.get(choice);
+
+                    // Random number of items (1 to 3)
+                    int lootCount = 1 + random.nextInt(3);
+                    System.out.println("✨ You found:");
+
+                    for (int i = 0; i < lootCount; i++) {
+                        LootItem foundItem = getRandomLoot(lootOptions, random);
+                        System.out.println(" - " + foundItem);
+                        inventory.add(foundItem);
+                    }
+
+                    visitedLocations.put(choice, true);
+                }
+            } else {
+                System.out.println("\n❓ That location doesn't exist. Try again.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    // Loot rarity weights
+    private static LootItem getRandomLoot(List<LootItem> options, Random random) {
+        // Define rarity weights
+        Map<String, Integer> rarityWeights = new HashMap<>();
+        rarityWeights.put("Common", 70);
+        rarityWeights.put("Rare", 25);
+        rarityWeights.put("Epic", 5);
+
+        // Filter weighted pool
+        List<LootItem> weightedPool = new ArrayList<>();
+        for (LootItem item : options) {
+            int weight = rarityWeights.getOrDefault(item.rarity, 1);
+            for (int i = 0; i < weight; i++) {
+                weightedPool.add(item);
+            }
+        }
+        return weightedPool.get(random.nextInt(weightedPool.size()));
+    }
+}
+
+class LootItem {
+    String name;
+    String rarity;
+
+    LootItem(String name, String rarity) {
+        this.name = name;
+        this.rarity = rarity;
+    }
+
+    @Override
+    public String toString() {
+        return name + " [" + rarity + "]";
+    }
+}
