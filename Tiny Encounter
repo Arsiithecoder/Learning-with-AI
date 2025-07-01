@@ -1,0 +1,21 @@
+import java.util.Random;
+
+public class TinyEncounter {
+    public static void main(String[] args) {
+        String[] encounters = {
+            "You find a hidden treasure chest!",
+            "A bandit jumps out from the bushes!",
+            "You meet a wandering merchant.",
+            "You discover an ancient ruin.",
+            "A mysterious fog surrounds you.",
+            "You stumble upon a friendly elf.",
+            "A wild animal blocks your path."
+        };
+
+        Random random = new Random();
+        int index = random.nextInt(encounters.length);
+
+        System.out.println("Your random encounter:");
+        System.out.println(encounters[index]);
+    }
+}
